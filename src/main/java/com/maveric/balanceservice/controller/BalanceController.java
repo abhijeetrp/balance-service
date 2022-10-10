@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,9 +19,9 @@ public class BalanceController {
     private BalanceService balanceService;
 
     @PostMapping("{accountId}/balances")
-    public ResponseEntity<BalanceDto> createBalance(@PathVariable String accountId, @RequestBody BalanceDto balanceDto) {
-        BalanceDto BalanceDtoResponse = balanceService.createBalance(balanceDto);
-        return new ResponseEntity<BalanceDto>(BalanceDtoResponse, HttpStatus.OK);
+    public ResponseEntity<BalanceDto> createBalance(@Valid @PathVariable String accountId, @RequestBody BalanceDto balanceDto) {
+        BalanceDto BalanceDtoResponse = this.balanceService.createBalance(balanceDto);
+        return new ResponseEntity<BalanceDto>(BalanceDtoResponse, HttpStatus.CREATED);
     }
 
     @GetMapping("{accountId}/balances")
